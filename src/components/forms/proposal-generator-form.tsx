@@ -16,7 +16,7 @@ const schema = z.object({
   projectTitle: z.string().min(3),
   projectDescription: z.string().min(10),
   services: z.string().min(3),
-  priceUsd: z.coerce.number().positive(),
+  priceUsd: z.number().positive(),
   timeline: z.string().min(2),
   additionalRequirements: z.string().optional(),
 });
@@ -78,7 +78,7 @@ export function ProposalGeneratorForm() {
         </div>
         <div>
           <label className="mb-1 block text-sm">Price (USD)</label>
-          <Input type="number" {...register("priceUsd")} />
+          <Input type="number" {...register("priceUsd", { valueAsNumber: true })} />
         </div>
         <div>
           <label className="mb-1 block text-sm">Timeline</label>
