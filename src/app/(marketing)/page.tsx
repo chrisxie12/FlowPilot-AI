@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Zap,
   Users,
@@ -14,11 +13,6 @@ import {
   ArrowRight,
   Check,
   ChevronDown,
-  UserX,
-  FileText,
-  CreditCard,
-  Star,
-  Play,
   Send,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -51,200 +45,75 @@ function useInView(threshold = 0.2) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                 Reusable                                   */
+/*                           Chat Transcript (one real thing)                 */
 /* -------------------------------------------------------------------------- */
 
-function SectionBadge({ children }: { children: React.ReactNode }) {
+function ChatTranscript() {
   return (
-    <span className="mb-4 inline-block rounded-full bg-indigo-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-500">
-      {children}
-    </span>
-  );
-}
-
-function SectionHeadline({
-  eyebrow,
-  title,
-  subtitle,
-  dark,
-}: {
-  eyebrow?: string;
-  title: string;
-  subtitle?: string;
-  dark?: boolean;
-}) {
-  return (
-    <div className="mx-auto max-w-2xl text-center">
-      {eyebrow && <SectionBadge>{eyebrow}</SectionBadge>}
-      <h2
-        className={cn(
-          "text-3xl font-bold tracking-tight sm:text-4xl lg:text-[40px]",
-          dark ? "text-white" : "text-slate-900"
-        )}
-      >
-        {title}
-      </h2>
-      {subtitle && (
-        <p
-          className={cn(
-            "mt-4 text-lg leading-relaxed",
-            dark ? "text-slate-400" : "text-slate-500"
-          )}
-        >
-          {subtitle}
-        </p>
-      )}
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/*                               Dashboard Mockup                             */
-/* -------------------------------------------------------------------------- */
-
-function DashboardMockup() {
-  return (
-    <div className="relative">
-      {/* Gradient blob */}
-      <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-indigo-500/15 via-indigo-500/5 to-transparent blur-2xl" />
-
-      <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)]">
-        {/* Title bar */}
-        <div className="flex items-center gap-2 border-b border-slate-100 bg-slate-50 px-4 py-3">
-          <div className="flex gap-1.5">
-            <div className="h-3 w-3 rounded-full bg-red-400" />
-            <div className="h-3 w-3 rounded-full bg-amber-400" />
-            <div className="h-3 w-3 rounded-full bg-green-400" />
-          </div>
-          <span className="ml-2 text-xs text-slate-400">FlowPilot Dashboard</span>
-        </div>
-
-        {/* Body */}
-        <div className="flex min-h-[320px]">
-          {/* Sidebar */}
-          <div className="hidden w-48 border-r border-slate-100 bg-slate-50/50 p-4 sm:block">
-            <div className="space-y-1">
-              {["Leads", "Projects", "Invoices", "AI Assistant"].map((item, i) => (
-                <div
-                  key={item}
-                  className={cn(
-                    "rounded-lg px-3 py-2 text-xs font-medium",
-                    i === 0
-                      ? "bg-indigo-500/10 text-indigo-600"
-                      : "text-slate-500 hover:bg-slate-100"
-                  )}
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Main content */}
-          <div className="flex-1 p-4">
-            <h3 className="mb-3 text-sm font-semibold text-slate-900">Lead Pipeline</h3>
-            <div className="flex gap-3 overflow-x-auto pb-2">
-              {["New", "Contacted", "Proposal Sent", "Won"].map((stage, si) => (
-                <div key={stage} className="min-w-[130px] flex-1">
-                  <div className="mb-2 text-[11px] font-medium text-slate-400">
-                    {stage}
-                  </div>
-                  <div className="space-y-2">
-                    {[1, 2].slice(0, si === 3 ? 1 : 2).map((c) => (
-                      <div
-                        key={c}
-                        className="rounded-lg border border-slate-200 bg-white p-2.5 shadow-sm"
-                      >
-                        <div className="flex items-center gap-2">
-                          <div className="h-6 w-6 rounded-full bg-indigo-100 text-[10px] font-bold text-indigo-600 flex items-center justify-center">
-                            {["A", "B", "C", "D"][si * 2 + c - 1]}
-                          </div>
-                          <div className="text-[11px] font-medium text-slate-700">
-                            {["Acme Corp", "BrightLabs", "Stark Design", "NovaTech"][
-                              si * 2 + c - 1
-                            ] || "Lead"}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* AI sidebar */}
-          <div className="hidden w-56 border-l border-slate-100 bg-slate-50/50 p-4 lg:block">
-            <div className="mb-2 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-indigo-500" />
-              <span className="text-xs font-semibold text-slate-700">AI Assistant</span>
-            </div>
-            <div className="rounded-xl bg-indigo-500/10 p-3 text-[11px] leading-relaxed text-slate-600">
-              3 leads need follow-up this week. Want me to draft emails?
-            </div>
-          </div>
-        </div>
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] sm:p-6">
+      <div className="mb-4 flex items-center gap-2 border-b border-slate-100 pb-4">
+        <Sparkles className="h-4 w-4 text-indigo-500" />
+        <span className="text-xs font-semibold text-slate-500">AI Assistant</span>
+        <span className="ml-auto rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-600">
+          Example conversation
+        </span>
       </div>
-    </div>
-  );
-}
 
-/* -------------------------------------------------------------------------- */
-/*                               Chat Mockup                                  */
-/* -------------------------------------------------------------------------- */
-
-function ChatMockup() {
-  return (
-    <div className="rounded-2xl border border-slate-700/50 bg-slate-800/50 p-4 shadow-[0_0_80px_rgba(99,102,241,0.2)] sm:p-6">
       <div className="space-y-4">
-        {/* User bubble */}
+        {/* User */}
         <div className="flex justify-end">
           <div className="max-w-[80%] rounded-2xl rounded-br-md bg-indigo-500 px-4 py-3 text-sm text-white">
-            Which leads need follow-up?
+            Which leads need follow-up this week?
           </div>
         </div>
 
-        {/* AI bubble */}
+        {/* AI */}
         <div className="flex justify-start gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-500/20">
-            <Sparkles className="h-4 w-4 text-indigo-400" />
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-100">
+            <Sparkles className="h-4 w-4 text-indigo-500" />
           </div>
-          <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-slate-700/60 px-4 py-3 text-sm leading-relaxed text-slate-200">
-            <p className="mb-2 font-medium text-white">You have 3 leads pending follow-up:</p>
-            <ul className="mb-3 space-y-1 text-slate-300">
-              <li>• Acme Corp — 5 days since last contact</li>
-              <li>• BrightLabs — 3 days, proposal viewed twice</li>
-              <li>• Stark Design — 1 day, no response to initial email</li>
+          <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-slate-50 px-4 py-3 text-sm leading-relaxed text-slate-700">
+            <p className="mb-2 font-medium text-slate-900">3 leads need follow-up:</p>
+            <ul className="mb-3 space-y-1">
+              <li>• <strong>Northwave Creative</strong> — you emailed 5 days ago, no reply</li>
+              <li>• <strong>Redpixel Studio</strong> — they viewed your proposal twice on Tuesday</li>
+              <li>• <strong>Jakes & Co</strong> — initial contact 3 days ago, went quiet</li>
             </ul>
-            <p className="text-slate-400">Want me to draft personalized follow-up emails?</p>
+            <p className="text-slate-500">Want me to draft follow-up emails for each?</p>
           </div>
         </div>
 
-        {/* User bubble */}
+        {/* User */}
         <div className="flex justify-end">
           <div className="max-w-[80%] rounded-2xl rounded-br-md bg-indigo-500 px-4 py-3 text-sm text-white">
-            Yes, draft for Acme Corp
+            Yes — start with Northwave. They want a 2-week landing page, budget around $3k.
           </div>
         </div>
 
-        {/* AI draft response */}
+        {/* AI draft */}
         <div className="flex justify-start gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-500/20">
-            <Sparkles className="h-4 w-4 text-indigo-400" />
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-100">
+            <Sparkles className="h-4 w-4 text-indigo-500" />
           </div>
-          <div className="max-w-[85%] overflow-hidden rounded-2xl rounded-bl-md border border-slate-600/50 bg-slate-700/40">
-            <div className="border-b border-slate-600/50 px-4 py-2">
-              <span className="text-[11px] text-slate-400">Subject:</span>
-              <span className="ml-1 text-sm text-white">Following up — Acme Corp</span>
+          <div className="max-w-[85%] overflow-hidden rounded-2xl rounded-bl-md border border-slate-200 bg-white">
+            <div className="border-b border-slate-100 px-4 py-2.5">
+              <span className="text-[11px] text-slate-400">To:</span>{" "}
+              <span className="text-sm text-slate-700">hello@northwavecreative.com</span>
             </div>
-            <div className="px-4 py-3 text-sm leading-relaxed text-slate-300">
-              Hi there, I wanted to circle back on our conversation about the website redesign project. Our team is ready to get started, and I&apos;d love to discuss next steps when you have a moment...
+            <div className="border-b border-slate-100 px-4 py-2">
+              <span className="text-[11px] text-slate-400">Subject:</span>{" "}
+              <span className="text-sm font-medium text-slate-900">Re: Landing page project</span>
             </div>
-            <div className="flex gap-2 border-t border-slate-600/50 px-4 py-2.5">
+            <div className="px-4 py-3 text-sm leading-relaxed text-slate-600">
+              Hey, just checking in on the landing page project. I know things get busy — wanted to
+              make sure I didn&apos;t miss anything on my end. Still happy to get started whenever
+              you&apos;re ready. I can have a first draft within a week of kickoff.
+            </div>
+            <div className="flex gap-2 border-t border-slate-100 px-4 py-2.5">
               <button className="flex items-center gap-1.5 rounded-lg bg-indigo-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-600">
                 <Send className="h-3 w-3" /> Send
               </button>
-              <button className="flex items-center gap-1.5 rounded-lg border border-slate-500 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-slate-600/50">
+              <button className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50">
                 Edit
               </button>
             </div>
@@ -261,24 +130,20 @@ function ChatMockup() {
 
 const faqItems = [
   {
-    q: "Is my client data secure?",
-    a: "Absolutely. We use bank-level 256-bit encryption, and your data is never used to train AI models. You own your data, period.",
+    q: "Is my data secure?",
+    a: "256-bit encryption, same standard banks use. Your data is never used to train AI models. You own it.",
   },
   {
-    q: "Can I import from spreadsheets or other tools?",
-    a: "Yes. Upload CSV files for leads and clients, or connect your Gmail to auto-import contacts. Notion and Airtable integrations are coming soon.",
+    q: "Can I import from a spreadsheet?",
+    a: "Yes — CSV upload for leads and clients. Gmail integration for auto-importing contacts.",
   },
   {
-    q: "Does it integrate with Stripe and PayPal?",
-    a: "Pro plans include native Stripe and PayPal integration. Invoices sync automatically, and payment status updates in real-time.",
+    q: "Does it work with Stripe?",
+    a: "Pro plans include Stripe and PayPal. Invoices sync automatically, payment status updates in real time.",
   },
   {
     q: "What happens when I hit the free plan limits?",
-    a: "You'll get a friendly heads-up. You can upgrade to Pro anytime, or archive old clients to make room. We never delete your data.",
-  },
-  {
-    q: "Can I cancel my Pro plan anytime?",
-    a: "Yes. No contracts, no cancellation fees. If you cancel, you keep access until the end of your billing period, then downgrade to Free.",
+    a: "You get a heads-up. Upgrade anytime or archive old clients. We never delete your data.",
   },
 ];
 
@@ -325,11 +190,8 @@ function FAQItem({
 export default function HomePage() {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const heroObs = useInView(0.15);
-  const problemObs = useInView();
+  const chatObs = useInView();
   const featuresObs = useInView();
-  const howObs = useInView();
-  const aiObs = useInView();
-  const testimonialsObs = useInView();
   const pricingObs = useInView();
   const faqObs = useInView();
   const ctaObs = useInView();
@@ -339,9 +201,9 @@ export default function HomePage() {
       {/* ================================================================== */}
       {/*                              HERO                                  */}
       {/* ================================================================== */}
-      <section className="relative min-h-[calc(100vh-72px)] overflow-hidden">
+      <section className="relative overflow-hidden py-20 sm:py-28">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-          <div className="flex min-h-[calc(100vh-72px)] flex-col items-center gap-12 py-20 lg:flex-row lg:items-center lg:gap-16">
+          <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:gap-16">
             {/* Left */}
             <div
               ref={heroObs.ref}
@@ -350,20 +212,17 @@ export default function HomePage() {
                 heroObs.inView && "animate-fade-up"
               )}
             >
-              <span className="mb-4 inline-block rounded-full bg-indigo-500 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
-                AI-Powered Freelance Workspace
+              <span className="mb-4 inline-block rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-600">
+                Early access — building in public
               </span>
               <h1 className="text-[36px] font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-[56px]">
-                Run your freelance business{" "}
-                <span className="text-indigo-500">on autopilot.</span>
+                Stop losing leads because you forgot to follow up.
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-slate-500">
-                Stop switching between spreadsheets, docs, and invoicing apps.
-                FlowPilot brings your leads, projects, and payments into one
-                intelligent workspace — so you can focus on billable work.
+                FlowPilot is one place for your leads, proposals, projects, and
+                invoices — with an AI assistant that actually knows your pipeline.
               </p>
 
-              {/* CTAs */}
               <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
                 <Link href="/signup">
                   <Button
@@ -373,42 +232,14 @@ export default function HomePage() {
                     Start for Free <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="gap-2">
-                  <Play className="h-4 w-4" /> Watch Demo
-                </Button>
               </div>
 
-              {/* Social proof */}
-              <div className="mt-10 flex items-center gap-4 lg:justify-start">
-                <div className="flex -space-x-2">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <div
-                      key={i}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-indigo-100 text-xs font-bold text-indigo-600"
-                    >
-                      {["S", "M", "E", "J", "A"][i]}
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-slate-900">
-                    Trusted by 2,000+ freelancers
-                  </p>
-                  <div className="flex items-center gap-1">
-                    <div className="flex text-amber-400">
-                      {[0, 1, 2, 3, 4].map((i) => (
-                        <Star key={i} className="h-3.5 w-3.5 fill-current" />
-                      ))}
-                    </div>
-                    <span className="text-xs text-slate-500">
-                      4.9/5 from 300+ reviews
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <p className="mt-4 text-sm text-slate-400">
+                Free while in beta. No credit card required.
+              </p>
             </div>
 
-            {/* Right — Mockup */}
+            {/* Right — Dashboard mockup */}
             <div
               ref={heroObs.ref}
               className={cn(
@@ -417,7 +248,67 @@ export default function HomePage() {
               )}
             >
               <div className="animate-float">
-                <DashboardMockup />
+                {/* Simple dashboard preview */}
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)]">
+                  <div className="flex items-center gap-2 border-b border-slate-100 bg-slate-50 px-4 py-3">
+                    <div className="flex gap-1.5">
+                      <div className="h-3 w-3 rounded-full bg-red-400" />
+                      <div className="h-3 w-3 rounded-full bg-amber-400" />
+                      <div className="h-3 w-3 rounded-full bg-green-400" />
+                    </div>
+                    <span className="ml-2 text-xs text-slate-400">FlowPilot</span>
+                  </div>
+                  <div className="flex min-h-[260px]">
+                    <div className="hidden w-40 border-r border-slate-100 bg-slate-50/50 p-3 sm:block">
+                      <div className="space-y-1">
+                        {["Leads", "Projects", "Invoices", "AI Assistant"].map((item, i) => (
+                          <div
+                            key={item}
+                            className={cn(
+                              "rounded-lg px-3 py-2 text-xs font-medium",
+                              i === 0
+                                ? "bg-indigo-500/10 text-indigo-600"
+                                : "text-slate-500"
+                            )}
+                          >
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex-1 p-4">
+                      <div className="mb-3 text-xs font-semibold text-slate-700">
+                        Lead Pipeline
+                      </div>
+                      <div className="flex gap-2">
+                        {[
+                          { stage: "New", names: ["Northwave Creative", "Redpixel Studio"] },
+                          { stage: "Contacted", names: ["Jakes & Co", "BrightLabs"] },
+                          { stage: "Proposal Sent", names: ["Stark Design"] },
+                          { stage: "Won", names: ["NovaTech"] },
+                        ].map((col) => (
+                          <div key={col.stage} className="min-w-[110px] flex-1">
+                            <div className="mb-1.5 text-[10px] font-medium text-slate-400">
+                              {col.stage}
+                            </div>
+                            <div className="space-y-1.5">
+                              {col.names.map((name) => (
+                                <div
+                                  key={name}
+                                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-2 shadow-sm"
+                                >
+                                  <div className="text-[10px] font-medium text-slate-700">
+                                    {name}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -425,71 +316,36 @@ export default function HomePage() {
       </section>
 
       {/* ================================================================== */}
-      {/*                            PROBLEM                                 */}
+      {/*                        FOUNDER NOTE                               */}
       {/* ================================================================== */}
-      <section className="bg-slate-50 py-20 sm:py-28">
+      <section className="border-y border-slate-100 bg-slate-50 py-12 sm:py-16">
+        <div className="mx-auto max-w-[640px] px-4 sm:px-6 lg:px-8">
+          {/* TODO: replace with Chris's real founder story — one specific moment, not a generic pain point */}
+          <p className="text-center text-[15px] leading-relaxed text-slate-500 italic">
+            {/* TODO: replace with Chris's real founder story — one specific moment, not a generic pain point. */}
+          </p>
+        </div>
+      </section>
+
+      {/* ================================================================== */}
+      {/*                     ONE REAL THING — AI CHAT                      */}
+      {/* ================================================================== */}
+      <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
           <div
-            ref={problemObs.ref}
+            ref={chatObs.ref}
             className={cn(
-              "transition-all duration-700",
-              problemObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              "mx-auto max-w-2xl transition-all duration-700",
+              chatObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
           >
-            <SectionHeadline
-              title="Tired of juggling five different tools?"
-              subtitle="You're not alone. Most freelancers waste 8+ hours a week on admin work."
-            />
-          </div>
-
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                icon: UserX,
-                title: "Lost Leads",
-                desc: "Leads slip through the cracks because there's no system. Spreadsheets don't remind you to follow up.",
-              },
-              {
-                icon: FileText,
-                title: "Proposal Hell",
-                desc: "You spend 2+ hours formatting proposals in Word or Google Docs. Every. Single. Time.",
-              },
-              {
-                icon: CreditCard,
-                title: "Invoice Chaos",
-                desc: "Invoices live in one app, payments in another, and tracking who paid what requires detective work.",
-              },
-            ].map((item, i) => (
-              <div
-                key={item.title}
-                className={cn(
-                  "rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500",
-                  problemObs.inView
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                )}
-                style={{ transitionDelay: `${(i + 1) * 100}ms` }}
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10">
-                  <item.icon className="h-6 w-6 text-indigo-500" />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-slate-900">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <a
-              href="#features"
-              className="inline-flex items-center gap-1 text-sm font-medium text-indigo-500 hover:text-indigo-600"
-            >
-              There&apos;s a better way <ArrowRight className="h-4 w-4" />
-            </a>
+            <p className="mb-2 text-center text-xs font-semibold uppercase tracking-wider text-indigo-500">
+              Here&apos;s what it actually does
+            </p>
+            <h2 className="mb-10 text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              Ask your pipeline a question. Get a draft.
+            </h2>
+            <ChatTranscript />
           </div>
         </div>
       </section>
@@ -497,7 +353,7 @@ export default function HomePage() {
       {/* ================================================================== */}
       {/*                            FEATURES                                */}
       {/* ================================================================== */}
-      <section id="features" className="py-20 sm:py-28">
+      <section id="features" className="bg-slate-50 py-20 sm:py-28">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
           <div
             ref={featuresObs.ref}
@@ -506,296 +362,122 @@ export default function HomePage() {
               featuresObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
           >
-            <SectionHeadline
-              eyebrow="Everything you need"
-              title="One platform. Your entire business."
-              subtitle="From first contact to final payment — manage it all without switching apps."
-            />
+            <h2 className="mb-10 text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              What FlowPilot does
+            </h2>
           </div>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                icon: Users,
-                title: "Lead Management",
-                desc: "Track and score every prospect. Automatic follow-up reminders so no opportunity goes cold.",
-                badge: null,
-              },
-              {
-                icon: Sparkles,
-                title: "AI Proposals",
-                desc: "Generate professional, branded proposals in seconds from a simple client brief. Edit and send in one click.",
-                badge: "Popular",
-              },
-              {
-                icon: FolderKanban,
-                title: "Project Tracking",
-                desc: "Kanban boards, task lists, and deadlines. See exactly what's on your plate at a glance.",
-                badge: null,
-              },
-              {
-                icon: Receipt,
-                title: "Invoicing & Payments",
-                desc: "Create invoices, track payments, and send automatic reminders. Integrates with Stripe and PayPal.",
-                badge: null,
-              },
-              {
-                icon: Bot,
-                title: "AI Business Assistant",
-                desc: "Ask anything: 'Which leads need follow-up?' or 'Draft a proposal for Acme Corp.' Your data, instantly understood.",
-                badge: "New",
-              },
-              {
-                icon: Zap,
-                title: "Workflow Automation",
-                desc: "Auto-move leads through stages, send scheduled emails, and trigger actions based on events.",
-                badge: null,
-              },
-            ].map((feat, i) => (
-              <div
-                key={feat.title}
-                className={cn(
-                  "group relative rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]",
-                  featuresObs.inView
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                )}
-                style={{ transitionDelay: `${(i + 1) * 80}ms` }}
-              >
-                {feat.badge && (
-                  <span
-                    className={cn(
-                      "absolute right-4 top-4 rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-white",
-                      feat.badge === "New"
-                        ? "bg-emerald-500"
-                        : "bg-indigo-500"
-                    )}
-                  >
-                    {feat.badge}
-                  </span>
-                )}
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 transition-colors duration-300 group-hover:bg-indigo-500 group-hover:text-white">
-                  <feat.icon className="h-6 w-6 text-indigo-500 transition-colors duration-300 group-hover:text-white" />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-slate-900">
-                  {feat.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                  {feat.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================== */}
-      {/*                         HOW IT WORKS                               */}
-      {/* ================================================================== */}
-      <section id="how-it-works" className="bg-slate-50 py-20 sm:py-28">
-        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-          <div
-            ref={howObs.ref}
-            className={cn(
-              "transition-all duration-700",
-              howObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            )}
-          >
-            <SectionHeadline
-              title="Get started in minutes, not days"
-              subtitle="No complex setup. No migration headaches. Just connect and go."
-            />
-          </div>
-
-          <div className="relative mt-16">
-            {/* Timeline line (desktop) */}
-            <div className="absolute left-0 right-0 top-5 hidden h-0.5 bg-indigo-200 lg:block" />
-
-            {/* Mobile vertical line */}
-            <div className="absolute bottom-0 left-5 top-0 w-0.5 bg-indigo-200 lg:hidden" />
-
-            <div className="grid gap-8 lg:grid-cols-4">
-              {[
-                {
-                  step: 1,
-                  title: "Import or Add Leads",
-                  desc: "Upload from CSV, connect your email, or add manually. AI enriches contact info automatically.",
-                  time: "2 minutes",
-                },
-                {
-                  step: 2,
-                  title: "Create Proposals with AI",
-                  desc: "Paste a client brief. FlowPilot generates a tailored, beautifully formatted proposal.",
-                  time: "30 seconds",
-                },
-                {
-                  step: 3,
-                  title: "Track Projects & Tasks",
-                  desc: "Organize work in Kanban boards. Set deadlines, attach files, and log time.",
-                  time: null,
-                },
-                {
-                  step: 4,
-                  title: "Invoice & Get Paid",
-                  desc: "One-click invoice generation from completed projects. Automatic payment reminders.",
-                  time: null,
-                },
-              ].map((s, i) => (
-                <div
-                  key={s.step}
-                  className={cn(
-                    "relative pl-14 transition-all duration-500 lg:pl-0 lg:text-center",
-                    howObs.inView
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-8"
-                  )}
-                  style={{ transitionDelay: `${(i + 1) * 100}ms` }}
-                >
-                  {/* Step circle */}
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-full bg-indigo-500 text-sm font-bold text-white lg:left-1/2 lg:-translate-x-1/2">
-                    {s.step}
-                  </div>
-
-                  <div className="pt-2 lg:pt-14">
-                    <h3 className="text-base font-semibold text-slate-900">
-                      {s.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                      {s.desc}
-                    </p>
-                    {s.time && (
-                      <span className="mt-2 inline-block rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-600">
-                        {s.time}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================== */}
-      {/*                        AI ASSISTANT SHOWCASE                       */}
-      {/* ================================================================== */}
-      <section className="bg-slate-900 py-20 sm:py-28">
-        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
-            {/* Left */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {/* AI Proposals — the hero feature, gets more space */}
             <div
-              ref={aiObs.ref}
               className={cn(
-                "flex-1",
-                aiObs.inView && "animate-fade-up"
+                "group relative rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] sm:col-span-2 lg:col-span-1",
+                featuresObs.inView
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
               )}
+              style={{ transitionDelay: "80ms" }}
             >
-              <SectionBadge>Your AI Business Partner</SectionBadge>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Ask your business anything. Get answers instantly.
-              </h2>
-              <ul className="mt-8 space-y-4">
-                {[
-                  "Which leads have I not followed up with this week?",
-                  "Create a proposal for BrightLabs based on our last conversation.",
-                  "How much revenue did I make last month vs. this month?",
-                  "Draft a polite payment reminder for Invoice #1042.",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-indigo-400" />
-                    <span className="text-sm leading-relaxed text-slate-300">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <Button className="mt-8 bg-indigo-500 text-white hover:bg-indigo-600">
-                See AI in Action
-              </Button>
-            </div>
-
-            {/* Right — Chat mockup */}
-            <div
-              ref={aiObs.ref}
-              className={cn(
-                "flex-1",
-                aiObs.inView && "animate-fade-up-delay-2"
-              )}
-            >
-              <ChatMockup />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================== */}
-      {/*                          TESTIMONIALS                              */}
-      {/* ================================================================== */}
-      <section className="py-20 sm:py-28">
-        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-          <div
-            ref={testimonialsObs.ref}
-            className={cn(
-              "transition-all duration-700",
-              testimonialsObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            )}
-          >
-            <SectionHeadline title="Loved by freelancers everywhere" />
-          </div>
-
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                quote:
-                  "FlowPilot cut my admin time by 60%. The AI proposals alone save me 3 hours every week. I actually enjoy sending proposals now.",
-                name: "Sarah Chen",
-                role: "Freelance UX Designer",
-                initials: "SC",
-              },
-              {
-                quote:
-                  "I used to lose leads constantly because I had no system. Now FlowPilot tells me exactly who to follow up with and when. Game changer.",
-                name: "Marcus Johnson",
-                role: "Independent Developer",
-                initials: "MJ",
-              },
-              {
-                quote:
-                  "The AI assistant feels like having a business partner. I ask it revenue questions, and it pulls real data instantly. No more spreadsheet gymnastics.",
-                name: "Elena Rossi",
-                role: "Marketing Consultant",
-                initials: "ER",
-              },
-            ].map((t, i) => (
-              <div
-                key={t.name}
-                className={cn(
-                  "rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500",
-                  testimonialsObs.inView
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                )}
-                style={{ transitionDelay: `${(i + 1) * 100}ms` }}
-              >
-                <div className="flex text-amber-400">
-                  {[0, 1, 2, 3, 4].map((s) => (
-                    <Star key={s} className="h-4 w-4 fill-current" />
-                  ))}
-                </div>
-                <p className="mt-4 text-[15px] leading-relaxed text-slate-600">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600">
-                    {t.initials}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-slate-900">{t.name}</p>
-                    <p className="text-xs text-slate-500">{t.role}</p>
-                  </div>
-                </div>
+              <span className="absolute right-4 top-4 rounded-full bg-indigo-500 px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                Core feature
+              </span>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 transition-colors duration-300 group-hover:bg-indigo-500">
+                <Sparkles className="h-6 w-6 text-indigo-500 transition-colors duration-300 group-hover:text-white" />
               </div>
-            ))}
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                AI Proposals
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                Type &ldquo;2-week landing page, $3,000&rdquo; and get a formatted proposal with
+                your rate card and terms already filled in. Edit the details, send it from the
+                same screen. Most people go from brief to sent proposal in under a minute.
+              </p>
+            </div>
+
+            <div
+              className={cn(
+                "group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]",
+                featuresObs.inView
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              )}
+              style={{ transitionDelay: "160ms" }}
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 transition-colors duration-300 group-hover:bg-indigo-500">
+                <Users className="h-6 w-6 text-indigo-500 transition-colors duration-300 group-hover:text-white" />
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                Lead tracking
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                Kanban board for your pipeline: New → Contacted → Proposal Sent → Won. Every
+                lead has a status, a last-contact date, and a next-follow-up reminder. You see
+                the whole picture without opening a spreadsheet.
+              </p>
+            </div>
+
+            <div
+              className={cn(
+                "group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]",
+                featuresObs.inView
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              )}
+              style={{ transitionDelay: "240ms" }}
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 transition-colors duration-300 group-hover:bg-indigo-500">
+                <FolderKanban className="h-6 w-6 text-indigo-500 transition-colors duration-300 group-hover:text-white" />
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                Project boards
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                Drag tasks between columns. Set deadlines. Attach files. When a project
+                finishes, generate the invoice from the same board — no re-entering details.
+              </p>
+            </div>
+
+            <div
+              className={cn(
+                "group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]",
+                featuresObs.inView
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              )}
+              style={{ transitionDelay: "320ms" }}
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 transition-colors duration-300 group-hover:bg-indigo-500">
+                <Receipt className="h-6 w-6 text-indigo-500 transition-colors duration-300 group-hover:text-white" />
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                Invoicing
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                One-click invoice from a completed project. Stripe and PayPal on Pro.
+                Automatic reminders when an invoice goes past due.
+              </p>
+            </div>
+
+            <div
+              className={cn(
+                "group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]",
+                featuresObs.inView
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              )}
+              style={{ transitionDelay: "400ms" }}
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 transition-colors duration-300 group-hover:bg-indigo-500">
+                <Bot className="h-6 w-6 text-indigo-500 transition-colors duration-300 group-hover:text-white" />
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                AI assistant
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                It reads your actual data. Ask &ldquo;who haven&rsquo;t I followed up with?&rdquo;
+                and get a list with names and dates — not a chatbot pretending to help.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -803,8 +485,8 @@ export default function HomePage() {
       {/* ================================================================== */}
       {/*                            PRICING                                 */}
       {/* ================================================================== */}
-      <section id="pricing" className="bg-slate-50 py-20 sm:py-28">
-        <div className="mx-auto max-w-[800px] px-4 sm:px-6 lg:px-8">
+      <section id="pricing" className="py-20 sm:py-28">
+        <div className="mx-auto max-w-[700px] px-4 sm:px-6 lg:px-8">
           <div
             ref={pricingObs.ref}
             className={cn(
@@ -812,27 +494,25 @@ export default function HomePage() {
               pricingObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
           >
-            <SectionHeadline
-              title="Simple, transparent pricing"
-              subtitle="Start free. Upgrade when you're ready."
-            />
+            <h2 className="mb-10 text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              Pricing
+            </h2>
           </div>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-2">
-            {/* Starter */}
+          <div className="grid gap-6 sm:grid-cols-2">
+            {/* Free */}
             <div
               className={cn(
-                "rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-500",
+                "rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-500",
                 pricingObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               )}
             >
-              <h3 className="text-lg font-semibold text-slate-900">Starter</h3>
-              <p className="mt-1 text-sm text-slate-500">Perfect for getting started</p>
-              <div className="mt-6">
-                <span className="text-4xl font-bold text-slate-900">$0</span>
-                <span className="text-sm text-slate-500"> / month</span>
+              <h3 className="text-base font-semibold text-slate-900">Free</h3>
+              <div className="mt-3">
+                <span className="text-3xl font-bold text-slate-900">$0</span>
+                <span className="text-sm text-slate-400"> / month</span>
               </div>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-5 space-y-2.5">
                 {[
                   "Up to 10 clients",
                   "Basic lead tracking",
@@ -844,46 +524,47 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <Button variant="outline" className="mt-8 w-full">
-                Start for Free
-              </Button>
+              <Link href="/signup" className="mt-6 block">
+                <Button variant="outline" className="w-full">
+                  Start for Free
+                </Button>
+              </Link>
             </div>
 
             {/* Pro */}
             <div
               className={cn(
-                "relative rounded-2xl border-2 border-indigo-500 bg-white p-8 shadow-[0_0_40px_rgba(99,102,241,0.1)] transition-all duration-500",
+                "relative rounded-2xl border-2 border-indigo-500 bg-white p-6 shadow-[0_0_40px_rgba(99,102,241,0.08)] transition-all duration-500",
                 pricingObs.inView ? "opacity-100 translate-y-0 delay-100" : "opacity-0 translate-y-8"
               )}
             >
-              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-indigo-500 px-4 py-1 text-xs font-semibold text-white">
-                Most Popular
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-indigo-500 px-3 py-0.5 text-[11px] font-semibold text-white">
+                Most used
               </span>
-              <h3 className="text-lg font-semibold text-slate-900">Pro</h3>
-              <p className="mt-1 text-sm text-slate-500">For growing freelance businesses</p>
-              <div className="mt-6">
-                <span className="text-4xl font-bold text-slate-900">$19</span>
-                <span className="text-sm text-slate-500"> / month</span>
+              <h3 className="text-base font-semibold text-slate-900">Pro</h3>
+              <div className="mt-3">
+                <span className="text-3xl font-bold text-slate-900">$19</span>
+                <span className="text-sm text-slate-400"> / month</span>
               </div>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-5 space-y-2.5">
                 {[
                   "Unlimited clients",
                   "Unlimited AI proposals",
-                  "Advanced project tracking",
                   "Workflow automation",
-                  "Priority AI assistant",
-                  "Stripe & PayPal integration",
+                  "Stripe & PayPal",
                 ].map((f) => (
                   <li key={f} className="flex items-center gap-2 text-sm text-slate-600">
                     <Check className="h-4 w-4 text-emerald-500" /> {f}
                   </li>
                 ))}
               </ul>
-              <Button className="mt-8 w-full bg-indigo-500 text-white hover:bg-indigo-600">
-                Start Pro Trial
-              </Button>
-              <p className="mt-3 text-center text-xs text-slate-400">
-                14-day free trial. No credit card required.
+              <Link href="/signup" className="mt-6 block">
+                <Button className="w-full bg-indigo-500 text-white hover:bg-indigo-600">
+                  Start Pro Trial
+                </Button>
+              </Link>
+              <p className="mt-2.5 text-center text-xs text-slate-400">
+                14-day trial. No card needed.
               </p>
             </div>
           </div>
@@ -893,8 +574,8 @@ export default function HomePage() {
       {/* ================================================================== */}
       {/*                               FAQ                                  */}
       {/* ================================================================== */}
-      <section className="py-20 sm:py-28">
-        <div className="mx-auto max-w-[640px] px-4 sm:px-6 lg:px-8">
+      <section className="bg-slate-50 py-20 sm:py-28">
+        <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-8">
           <div
             ref={faqObs.ref}
             className={cn(
@@ -902,10 +583,12 @@ export default function HomePage() {
               faqObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
           >
-            <SectionHeadline title="Questions? Answered." />
+            <h2 className="mb-8 text-center text-2xl font-bold tracking-tight text-slate-900">
+              Common questions
+            </h2>
           </div>
 
-          <div className="mt-10">
+          <div>
             {faqItems.map((item, i) => (
               <FAQItem
                 key={i}
@@ -921,39 +604,28 @@ export default function HomePage() {
       {/* ================================================================== */}
       {/*                          FINAL CTA                                 */}
       {/* ================================================================== */}
-      <section className="bg-slate-900 py-20 sm:py-28">
+      <section className="py-20 sm:py-28">
         <div
           ref={ctaObs.ref}
           className={cn(
-            "mx-auto max-w-[1200px] px-4 text-center transition-all duration-700",
+            "mx-auto max-w-[640px] px-4 text-center transition-all duration-700",
             ctaObs.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           )}
         >
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Ready to stop juggling tools?
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            Try it — takes two minutes to add your first lead.
           </h2>
-          <p className="mt-4 text-lg text-slate-400">
-            Join 2,000+ freelancers who&apos;ve streamlined their business with
-            FlowPilot. Free forever to start.
+          <p className="mt-4 text-base text-slate-500">
+            Free while in beta. No credit card, no sales call.
           </p>
           <Link href="/signup">
             <Button
               size="lg"
               className="mt-8 gap-2 bg-indigo-500 text-white hover:bg-indigo-600"
             >
-              Start for Free — No Credit Card Required <ArrowRight className="h-4 w-4" />
+              Start for Free <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-400">
-            {["Free forever plan available", "Setup in under 5 minutes", "Cancel anytime"].map(
-              (t) => (
-                <span key={t} className="flex items-center gap-1.5">
-                  <Check className="h-4 w-4 text-emerald-500" /> {t}
-                </span>
-              )
-            )}
-          </div>
         </div>
       </section>
     </>
