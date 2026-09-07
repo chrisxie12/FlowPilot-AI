@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { PageHeader } from "@/components/page-header";
+import { PageHeader } from "@/components/layout/page-header";
 import { Plus, Search, MoreHorizontal, Eye, Send, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
