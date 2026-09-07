@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageHeader } from "@/components/page-header";
+import { PageHeader } from "@/components/layout/page-header";
 import { Plus, Calendar, DollarSign, FolderOpen } from "lucide-react";
 
 type ProjectStatus = "Planning" | "In Progress" | "Review";
