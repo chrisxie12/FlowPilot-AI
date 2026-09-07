@@ -51,6 +51,9 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
         success: "hsl(var(--success))",
+        "surface": "rgba(255, 255, 255, 0.04)",
+        "surface-border": "rgba(255, 255, 255, 0.08)",
+        "surface-border-hover": "rgba(255, 255, 255, 0.15)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -67,24 +70,30 @@ const config: Config = {
           to: { height: "0" },
         },
         "fade-up": {
-          from: { opacity: "0", transform: "translateY(30px)" },
+          from: { opacity: "0", transform: "translateY(16px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
         float: {
-          "0%, 100%": { transform: "translateY(-8px)" },
-          "50%": { transform: "translateY(8px)" },
+          "0%, 100%": { transform: "translateY(-6px)" },
+          "50%": { transform: "translateY(6px)" },
         },
-        glow: {
-          from: { boxShadow: "0 0 60px rgba(99, 102, 241, 0.15)" },
-          to: { boxShadow: "0 0 80px rgba(99, 102, 241, 0.25)" },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "0.7" },
+        },
+        "drift": {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "33%": { transform: "translate(30px, -20px) scale(1.05)" },
+          "66%": { transform: "translate(-20px, 15px) scale(0.95)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-up": "fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "fade-up": "fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         float: "float 6s ease-in-out infinite",
-        glow: "glow 3s ease-in-out infinite alternate",
+        "glow-pulse": "glow-pulse 4s ease-in-out infinite",
+        drift: "drift 20s ease-in-out infinite",
       },
     },
   },
