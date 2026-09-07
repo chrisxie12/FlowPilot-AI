@@ -50,6 +50,7 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        success: "hsl(var(--success))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,10 +66,25 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(30px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(-8px)" },
+          "50%": { transform: "translateY(8px)" },
+        },
+        glow: {
+          from: { boxShadow: "0 0 60px rgba(99, 102, 241, 0.15)" },
+          to: { boxShadow: "0 0 80px rgba(99, 102, 241, 0.25)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-up": "fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        float: "float 6s ease-in-out infinite",
+        glow: "glow 3s ease-in-out infinite alternate",
       },
     },
   },
